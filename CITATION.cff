@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the thesis."
+title: "Replication code for: Machine Learning Factor Selection in European Equity Markets"
+authors:
+  - family-names: "Schäfer"
+    given-names: "Jakob"
+license: MIT
+date-released: 2026-11-15
+preferred-citation:
+  type: thesis
+  title: "Machine Learning Factor Selection in European Equity Markets: Stability and Out-of-Sample Value for Investors"
+  authors:
+    - family-names: "Schäfer"
+      given-names: "Jakob"
+  institution:
+    name: "University of St. Gallen"
+  year: 2026
+  notes: "Bachelor thesis, supervised by Prof. Dr. Dr. Can Gao"

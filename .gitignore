@@ -1,0 +1,12 @@
+# input data (not redistributed) and results
+data/
+output/
+
+# local data locations
+config/data_paths.ini
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/

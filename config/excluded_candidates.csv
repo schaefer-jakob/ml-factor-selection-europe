@@ -1,0 +1,5 @@
+candidate,test_asset,reason
+betabab_1260d,beta_60m,same quantity (market beta) - only the estimator differs
+gp_atl1,gp_at,same quantity (gross profits to assets) - only the denominator lag differs
+inv_gr1,inv_gr1a,same quantity (inventory change) - only the scaling differs
+resff3_12_1,resff3_6_1,same quantity (residual momentum) - only the window differs
