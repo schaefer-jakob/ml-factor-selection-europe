@@ -102,14 +102,14 @@ results exactly.
 
 ## Expected run time
 
-Approximate times on a Windows machine with 16 logical cores, with the four scopes run in parallel:
+Measured on a Windows machine with 16 logical cores, with the four scopes run in parallel (`--jobs 4`):
 
 | Scope | Run time |
 |---|---|
-| `main` | about 6 hours |
-| `candidates65` | about 5 hours |
-| `pooled` | about 2.5 hours |
-| `bivariate` | about 4 hours |
+| `main` | 6.2 hours |
+| `candidates65` | 5.5 hours |
+| `pooled` | 1.8 hours |
+| `bivariate` | 3.9 hours |
 
 Chapter 4 takes a few minutes. Most of the time goes into the rolling-window
 selections with cross-validated penalties (`06`) and the placebo draws (`09`,
@@ -157,7 +157,7 @@ refer to `scripts/`.
 | Table B7, Panel B | attenuation slope | 02 | `T3_premia_<CTY>.csv` (`attenuation_slope`) |
 | Appendix C | cap of eight factors | 15 | `k_cap.csv` |
 | Appendix C | rejected correlation threshold of 0.70 | 14 | `C0_candidate_max_corr.csv` |
-| Appendix C | forward stepwise selects nothing in more than 46 percent of halves | 06 | `P1c_empty_draws.csv` |
+| Appendix C | no candidate selected by forward stepwise in more than 46 percent of halves | 06 | `P1_stability_frequencies.csv` (column maxima) |
 | Appendix C | bivariate candidate betas | 16, 09 | `output/bivariate/P2c_by_separation.csv`, `P11p_placebo.csv` |
 | Table C1 | stability-selection frequencies; null band | 06 | `P1_stability_frequencies.csv`, `P5_classics.csv`, `P1b_null_band.csv` |
 | Table C2 | steps of the lucky-factors bootstrap | 08 | `G3a_lucky_full_sample.csv` |

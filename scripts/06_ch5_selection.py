@@ -3,7 +3,6 @@
 Writes to output/<scope>/:
   P1_stability_frequencies.csv      selection frequency over 100 random halves, q = 8 (Tables 5, C1)
   P1_stability_frequencies_q4.csv   the same with q = 4
-  P1c_empty_draws.csv               share of halves in which a method selects nothing (Appendix C)
   P1b_null_band.csv                 highest frequency when no candidate is priced (Table C1, Panel C)
   P5_classics.csv                   frequencies of the classic characteristics and the base rate q/p (Table C1)
   P12_stable_sets.csv               stable sets and the Meinshausen-Buehlmann bound (Tables 4, C6, D2)
@@ -51,17 +50,15 @@ def main():
                  4: sel.selectors(cap=4)}
 
     # --- stability selection ---------------------------------------------
-    freqs, empty = {}, []
+    freqs = {}
     for q, sels_q in stab_sets.items():
         for c in countries:
             R, m, Z = samples[c]
             mk = m.to_numpy().ravel()
             for meth, fn in sels_q.items():
                 rng = np.random.default_rng(sel.SEED)
-                f, _, e = sel.stability_selection(fn, R, mk, Z, n_draws=N_DRAWS, rng=rng,
-                                                  return_empty=True)
+                f, _ = sel.stability_selection(fn, R, mk, Z, n_draws=N_DRAWS, rng=rng)
                 freqs[(c, meth, q)] = f
-                empty.append(dict(q=q, country=c, method=meth, empty_share=e))
                 print('  %s %-16s q=%d  max freq %.2f'
                       % (c, meth, q, f.max() if len(f) else 0.0), flush=True)
 
@@ -71,7 +68,6 @@ def main():
         return F_.loc[F_.max(axis=1).sort_values(ascending=False).index]
     F = save('P1_stability_frequencies', freq_frame(8))
     save('P1_stability_frequencies_q4', freq_frame(4))
-    save('P1c_empty_draws', pd.DataFrame(empty).set_index(['q', 'country', 'method']))
 
     # --- null band (Table C1, Panel C) --------------------------------------
     rows = []

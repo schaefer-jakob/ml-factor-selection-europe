@@ -325,17 +325,15 @@ def factor_clusters(Z, min_avg_corr=0.5):
 
 
 # ------------------------------------------------------ stability selection ---
-def stability_selection(selector, R, Fmkt, Z, n_draws=100, frac=0.5, rng=None,
-                        return_empty=False):
+def stability_selection(selector, R, Fmkt, Z, n_draws=100, frac=0.5, rng=None):
     """Selection frequency of each candidate over n_draws random halves of the
     months (Meinshausen and Buehlmann, 2010). Returns (frequencies, share of
-    draws in which the cap binds, NaN where not applicable), and with
-    return_empty also the share of draws in which nothing is selected."""
+    draws in which the cap binds, NaN where not applicable)."""
     rng = rng or np.random.default_rng(SEED)
     Fmkt = np.asarray(Fmkt).ravel()
     T = R.shape[0]
     k = int(round(frac * T))
-    counts, caps, empty = {}, 0, 0
+    counts, caps = {}, 0
     for _ in range(n_draws):
         take = np.sort(rng.choice(T, size=k, replace=False))
         sel, capped = selector(R.iloc[take], Fmkt[take], Z.iloc[take])
@@ -343,14 +341,10 @@ def stability_selection(selector, R, Fmkt, Z, n_draws=100, frac=0.5, rng=None,
             caps = None
         elif caps is not None:
             caps += int(capped)
-        empty += int(len(sel) == 0)
         for f in sel:
             counts[f] = counts.get(f, 0) + 1
     freq = pd.Series(counts, dtype=float).sort_values(ascending=False) / n_draws
-    cap_share = np.nan if caps is None else caps / n_draws
-    if return_empty:
-        return freq, cap_share, empty / n_draws
-    return freq, cap_share
+    return freq, (np.nan if caps is None else caps / n_draws)
 
 
 def null_frequencies(selector, R, Fmkt, Z, n_draws=100, frac=0.5, rng=None):
